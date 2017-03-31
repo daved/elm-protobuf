@@ -173,22 +173,22 @@ func (fg *FileGenerator) GenerateMessageEncoder(prefix string, inMessage *descri
 func fieldElmType(inField *descriptor.FieldDescriptorProto) string {
 	switch inField.GetType() {
 	case descriptor.FieldDescriptorProto_TYPE_INT32,
-		descriptor.FieldDescriptorProto_TYPE_INT64,
 		descriptor.FieldDescriptorProto_TYPE_UINT32,
-		descriptor.FieldDescriptorProto_TYPE_UINT64,
 		descriptor.FieldDescriptorProto_TYPE_SINT32,
-		descriptor.FieldDescriptorProto_TYPE_SINT64,
 		descriptor.FieldDescriptorProto_TYPE_FIXED32,
-		descriptor.FieldDescriptorProto_TYPE_FIXED64,
-		descriptor.FieldDescriptorProto_TYPE_SFIXED32,
-		descriptor.FieldDescriptorProto_TYPE_SFIXED64:
+		descriptor.FieldDescriptorProto_TYPE_SFIXED32:
 		return "Int"
 	case descriptor.FieldDescriptorProto_TYPE_FLOAT,
 		descriptor.FieldDescriptorProto_TYPE_DOUBLE:
 		return "Float"
 	case descriptor.FieldDescriptorProto_TYPE_BOOL:
 		return "Bool"
-	case descriptor.FieldDescriptorProto_TYPE_STRING:
+	case descriptor.FieldDescriptorProto_TYPE_STRING,
+		descriptor.FieldDescriptorProto_TYPE_INT64,
+		descriptor.FieldDescriptorProto_TYPE_UINT64,
+		descriptor.FieldDescriptorProto_TYPE_SINT64,
+		descriptor.FieldDescriptorProto_TYPE_FIXED64,
+		descriptor.FieldDescriptorProto_TYPE_SFIXED64:
 		return "String"
 	case descriptor.FieldDescriptorProto_TYPE_MESSAGE,
 		descriptor.FieldDescriptorProto_TYPE_ENUM:
@@ -210,15 +210,10 @@ func fieldElmType(inField *descriptor.FieldDescriptorProto) string {
 func fieldEncoderName(inField *descriptor.FieldDescriptorProto) string {
 	switch inField.GetType() {
 	case descriptor.FieldDescriptorProto_TYPE_INT32,
-		descriptor.FieldDescriptorProto_TYPE_INT64,
 		descriptor.FieldDescriptorProto_TYPE_UINT32,
-		descriptor.FieldDescriptorProto_TYPE_UINT64,
 		descriptor.FieldDescriptorProto_TYPE_SINT32,
-		descriptor.FieldDescriptorProto_TYPE_SINT64,
 		descriptor.FieldDescriptorProto_TYPE_FIXED32,
-		descriptor.FieldDescriptorProto_TYPE_FIXED64,
-		descriptor.FieldDescriptorProto_TYPE_SFIXED32,
-		descriptor.FieldDescriptorProto_TYPE_SFIXED64:
+		descriptor.FieldDescriptorProto_TYPE_SFIXED32:
 		// TODO: Handle parsing from string (for 64 bit types).
 		return "JE.int"
 	case descriptor.FieldDescriptorProto_TYPE_FLOAT,
@@ -226,7 +221,12 @@ func fieldEncoderName(inField *descriptor.FieldDescriptorProto) string {
 		return "JE.float"
 	case descriptor.FieldDescriptorProto_TYPE_BOOL:
 		return "JE.bool"
-	case descriptor.FieldDescriptorProto_TYPE_STRING:
+	case descriptor.FieldDescriptorProto_TYPE_STRING,
+		descriptor.FieldDescriptorProto_TYPE_INT64,
+		descriptor.FieldDescriptorProto_TYPE_UINT64,
+		descriptor.FieldDescriptorProto_TYPE_SINT64,
+		descriptor.FieldDescriptorProto_TYPE_FIXED64,
+		descriptor.FieldDescriptorProto_TYPE_SFIXED64:
 		return "JE.string"
 	case descriptor.FieldDescriptorProto_TYPE_ENUM:
 		// TODO: Default enum value.
@@ -250,15 +250,10 @@ func fieldEncoderName(inField *descriptor.FieldDescriptorProto) string {
 func fieldDecoderName(inField *descriptor.FieldDescriptorProto) string {
 	switch inField.GetType() {
 	case descriptor.FieldDescriptorProto_TYPE_INT32,
-		descriptor.FieldDescriptorProto_TYPE_INT64,
 		descriptor.FieldDescriptorProto_TYPE_UINT32,
-		descriptor.FieldDescriptorProto_TYPE_UINT64,
 		descriptor.FieldDescriptorProto_TYPE_SINT32,
-		descriptor.FieldDescriptorProto_TYPE_SINT64,
 		descriptor.FieldDescriptorProto_TYPE_FIXED32,
-		descriptor.FieldDescriptorProto_TYPE_FIXED64,
-		descriptor.FieldDescriptorProto_TYPE_SFIXED32,
-		descriptor.FieldDescriptorProto_TYPE_SFIXED64:
+		descriptor.FieldDescriptorProto_TYPE_SFIXED32:
 		// TODO: Handle parsing from string (for 64 bit types).
 		return "JD.int"
 	case descriptor.FieldDescriptorProto_TYPE_FLOAT,
@@ -266,7 +261,12 @@ func fieldDecoderName(inField *descriptor.FieldDescriptorProto) string {
 		return "JD.float"
 	case descriptor.FieldDescriptorProto_TYPE_BOOL:
 		return "JD.bool"
-	case descriptor.FieldDescriptorProto_TYPE_STRING:
+	case descriptor.FieldDescriptorProto_TYPE_STRING,
+		descriptor.FieldDescriptorProto_TYPE_INT64,
+		descriptor.FieldDescriptorProto_TYPE_UINT64,
+		descriptor.FieldDescriptorProto_TYPE_SINT64,
+		descriptor.FieldDescriptorProto_TYPE_FIXED64,
+		descriptor.FieldDescriptorProto_TYPE_SFIXED64:
 		return "JD.string"
 	case descriptor.FieldDescriptorProto_TYPE_ENUM:
 		// TODO: Default enum value.
@@ -294,22 +294,22 @@ func fieldDefaultValue(inField *descriptor.FieldDescriptorProto) string {
 
 	switch inField.GetType() {
 	case descriptor.FieldDescriptorProto_TYPE_INT32,
-		descriptor.FieldDescriptorProto_TYPE_INT64,
 		descriptor.FieldDescriptorProto_TYPE_UINT32,
-		descriptor.FieldDescriptorProto_TYPE_UINT64,
 		descriptor.FieldDescriptorProto_TYPE_SINT32,
-		descriptor.FieldDescriptorProto_TYPE_SINT64,
 		descriptor.FieldDescriptorProto_TYPE_FIXED32,
-		descriptor.FieldDescriptorProto_TYPE_FIXED64,
-		descriptor.FieldDescriptorProto_TYPE_SFIXED32,
-		descriptor.FieldDescriptorProto_TYPE_SFIXED64:
+		descriptor.FieldDescriptorProto_TYPE_SFIXED32:
 		return "0"
 	case descriptor.FieldDescriptorProto_TYPE_FLOAT,
 		descriptor.FieldDescriptorProto_TYPE_DOUBLE:
 		return "0.0"
 	case descriptor.FieldDescriptorProto_TYPE_BOOL:
 		return "False"
-	case descriptor.FieldDescriptorProto_TYPE_STRING:
+	case descriptor.FieldDescriptorProto_TYPE_STRING,
+		descriptor.FieldDescriptorProto_TYPE_INT64,
+		descriptor.FieldDescriptorProto_TYPE_UINT64,
+		descriptor.FieldDescriptorProto_TYPE_SINT64,
+		descriptor.FieldDescriptorProto_TYPE_FIXED64,
+		descriptor.FieldDescriptorProto_TYPE_SFIXED64:
 		return "\"\""
 	case descriptor.FieldDescriptorProto_TYPE_ENUM:
 		// TODO: Default enum value.
